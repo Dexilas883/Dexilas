@@ -1,0 +1,30 @@
+CREATE DATABASE immobilier_db;
+
+USE immobilier_db;
+
+CREATE TABLE utilisateurs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    mot_de_passe VARCHAR(255)
+);
+
+CREATE TABLE proprietes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titre VARCHAR(255),
+    description TEXT,
+    prix DECIMAL(10, 2),
+    adresse VARCHAR(255),
+    type ENUM('Appartement', 'Maison', 'Bureau', 'Terrain'),
+    date_ajout TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_propriete INT,
+    id_utilisateur INT,
+    montant DECIMAL(10, 2),
+    date_transaction TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_propriete) REFERENCES proprietes(id),
+    FOREIGN KEY (id_utilisateur) REFERENCES utilisateurs(id)
+);
